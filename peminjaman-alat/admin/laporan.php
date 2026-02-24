@@ -3,76 +3,51 @@ require '../config/database.php';
 require '../middleware/auth_check.php';
 cekRole('admin');
 
-// =======================
-// FILTER TANGGAL
-// =======================
-$where = "";
-if (isset($_GET['dari']) && isset($_GET['sampai'])) {
-    $dari = $_GET['dari'];
-    $sampai = $_GET['sampai'];
-    $where = "WHERE tanggal_pinjam BETWEEN '$dari' AND '$sampai'";
-}
-
-// =======================
-// DATA LAPORAN
-// =======================
 $data = mysqli_query($conn, "
     SELECT peminjaman.*, users.nama, alat.nama_alat
     FROM peminjaman
     JOIN users ON peminjaman.user_id = users.id
     JOIN alat ON peminjaman.alat_id = alat.id
-    $where
-    ORDER BY peminjaman.tanggal_pinjam DESC
+    ORDER BY peminjaman.id DESC
 ");
 ?>
 
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Laporan Admin</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<title>Laporan</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
-<body class="bg-gray-100 p-8">
+<body class="bg-gray-100 min-h-screen flex">
 
-<h1 class="text-2xl font-bold mb-4">Laporan Peminjaman (Admin)</h1>
+<?php include 'layout/sidebar.php'; ?>
 
-<!-- FILTER -->
-<form method="GET" class="bg-white p-4 rounded shadow mb-6 flex flex-wrap gap-4">
-    <input type="date" name="dari" required class="border p-2 rounded">
-    <input type="date" name="sampai" required class="border p-2 rounded">
-    <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-        Filter
-    </button>
-</form>
+<main class="flex-1 p-8 overflow-y-auto">
+<h1 class="text-2xl font-bold mb-6">Laporan Peminjaman</h1>
 
-<!-- TABEL -->
-<div class="bg-white p-6 rounded shadow overflow-x-auto">
-<table class="w-full border">
-<tr class="bg-gray-200">
-    <th class="border p-2">User</th>
-    <th class="border p-2">Alat</th>
-    <th class="border p-2">Jumlah</th>
-    <th class="border p-2">Pinjam</th>
-    <th class="border p-2">Kembali</th>
-    <th class="border p-2">Status</th>
-</tr>
+<div class="bg-white p-6 rounded-xl shadow">
+<div class="overflow-y-auto max-h-[70vh]">
+    <table class="w-full border">
+    <tr class="bg-gray-200">
+        <th class="border p-2">User</th>
+        <th class="border p-2">Alat</th>
+        <th class="border p-2">Status</th>
+    </tr>
 
-<?php while($row = mysqli_fetch_assoc($data)): ?>
-<tr>
-    <td class="border p-2"><?= $row['nama']; ?></td>
-    <td class="border p-2"><?= $row['nama_alat']; ?></td>
-    <td class="border p-2 text-center"><?= $row['jumlah']; ?></td>
-    <td class="border p-2"><?= $row['tanggal_pinjam']; ?></td>
-    <td class="border p-2"><?= $row['tanggal_kembali']; ?></td>
-    <td class="border p-2 text-center"><?= $row['status']; ?></td>
-</tr>
-<?php endwhile; ?>
-</table>
+    <?php while($row=mysqli_fetch_assoc($data)): ?>
+    <tr>
+        <td class="border p-2"><?= $row['nama'] ?></td>
+        <td class="border p-2"><?= $row['nama_alat'] ?></td>
+        <td class="border p-2"><?= ucfirst($row['status']) ?></td>
+    </tr>
+    <?php endwhile; ?>
+    </table>
 </div>
-
-<a href="dashboard.php" class="inline-block mt-6 text-blue-600">← Kembali</a>
-
+</div>
+</main>
 </body>
 </html>

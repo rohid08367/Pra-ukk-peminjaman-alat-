@@ -3,6 +3,9 @@ require '../config/database.php';
 require '../middleware/auth_check.php';
 cekRole('petugas');
 
+/* =======================
+   SETUJUI
+======================= */
 if (isset($_GET['setujui'])) {
     $id = $_GET['setujui'];
 
@@ -14,7 +17,6 @@ if (isset($_GET['setujui'])) {
         SELECT stok FROM alat WHERE id='$pinjam[alat_id]'
     "));
 
-    // CEK STOK ULANG (AMAN)
     if ($pinjam['jumlah'] > $alat['stok']) {
         echo "<script>
             alert('Stok tidak mencukupi!');
@@ -23,7 +25,6 @@ if (isset($_GET['setujui'])) {
         exit;
     }
 
-    // KURANGI STOK
     $sisa = $alat['stok'] - $pinjam['jumlah'];
 
     mysqli_query($conn, "
@@ -39,12 +40,15 @@ if (isset($_GET['setujui'])) {
         WHERE id='$id'
     ");
 
-    echo "<script>alert('Peminjaman disetujui');location='approve_peminjaman.php';</script>";
+    echo "<script>
+        alert('Peminjaman disetujui');
+        location='approve_peminjaman.php';
+    </script>";
 }
 
-// =======================
-// TOLAK
-// =======================
+/* =======================
+   TOLAK
+======================= */
 if (isset($_GET['tolak'])) {
     $id = $_GET['tolak'];
 
@@ -52,12 +56,15 @@ if (isset($_GET['tolak'])) {
         UPDATE peminjaman SET status='ditolak' WHERE id='$id'
     ");
 
-    echo "<script>alert('Peminjaman ditolak');location='approve_peminjaman.php';</script>";
+    echo "<script>
+        alert('Peminjaman ditolak');
+        location='approve_peminjaman.php';
+    </script>";
 }
 
-// =======================
-// DATA PENDING
-// =======================
+/* =======================
+   DATA PENDING
+======================= */
 $data = mysqli_query($conn, "
     SELECT peminjaman.*, users.nama, alat.nama_alat
     FROM peminjaman
@@ -69,41 +76,60 @@ $data = mysqli_query($conn, "
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Approve Peminjaman</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<title>Approve Peminjaman</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
-<body class="bg-gray-100 p-8">
-<h1 class="text-2xl font-bold mb-4">Persetujuan Peminjaman</h1>
+<body class="bg-gray-100 min-h-screen flex overflow-hidden">
 
-<div class="bg-white p-6 rounded shadow">
+<!-- SIDEBAR -->
+<?php include 'layout/sidebar.php'; ?>
+
+<!-- MAIN -->
+<main class="flex-1 p-8 overflow-y-auto">
+
+<h1 class="text-2xl font-bold mb-6">Persetujuan Peminjaman</h1>
+
+<div class="bg-white p-6 rounded-xl shadow">
+<div class="overflow-x-auto">
+
 <table class="w-full border">
 <tr class="bg-gray-200">
     <th class="border p-2">User</th>
     <th class="border p-2">Alat</th>
     <th class="border p-2">Tgl Kembali</th>
-    <th class="border p-2">Aksi</th>
+    <th class="border p-2 text-center">Aksi</th>
 </tr>
 
 <?php while($row=mysqli_fetch_assoc($data)): ?>
-<tr>
+<tr class="hover:bg-gray-50">
     <td class="border p-2"><?= $row['nama'] ?></td>
     <td class="border p-2"><?= $row['nama_alat'] ?></td>
     <td class="border p-2"><?= $row['tanggal_kembali'] ?></td>
-    <td class="border p-2 text-center">
-        <a href="?setujui=<?= $row['id'] ?>" class="bg-green-500 text-white px-3 py-1 rounded">Setujui</a>
-        <a href="?tolak=<?= $row['id'] ?>" class="bg-red-500 text-white px-3 py-1 rounded">Tolak</a>
+    <td class="border p-2 text-center space-x-2">
+        <a href="?setujui=<?= $row['id'] ?>"
+           onclick="return confirm('Setujui peminjaman ini?')"
+           class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">
+            Setujui
+        </a>
+        <a href="?tolak=<?= $row['id'] ?>"
+           onclick="return confirm('Tolak peminjaman ini?')"
+           class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+            Tolak
+        </a>
     </td>
 </tr>
 <?php endwhile; ?>
 </table>
+
 </div>
-
-<a href="dashboard.php" class="inline-block mt-6 text-blue-600">
-    ← Kembali ke Dashboard
-</a>
-
+</div>
+</main>
 </body>
 </html>

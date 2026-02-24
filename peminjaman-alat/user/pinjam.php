@@ -88,54 +88,82 @@ $alat = mysqli_query($conn, "
     <meta charset="UTF-8">
     <title>Pinjam Alat</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
-<body class="bg-gray-100 p-8">
+<body class="bg-gray-100 flex">
 
-<h1 class="text-2xl font-bold mb-4">Ajukan Peminjaman</h1>
+<!-- SIDEBAR -->
+<?php include 'layout/sidebar.php'; ?>
 
-<div class="bg-white p-6 rounded shadow max-w-xl">
-<form method="POST">
+<!-- KONTEN UTAMA -->
+<div class="flex-1 p-8">
 
-    <label class="block mb-2">Pilih Alat</label>
-    <select name="alat_id" required class="border p-2 w-full mb-4">
-        <option value="">-- Pilih --</option>
-        <?php while($a = mysqli_fetch_assoc($alat)): ?>
-            <option value="<?= $a['id']; ?>">
-                <?= htmlspecialchars($a['nama_alat']); ?> (Stok: <?= $a['stok']; ?>)
-            </option>
-        <?php endwhile; ?>
-    </select>
+    <!-- HEADER -->
+    <h1 class="text-2xl font-bold mb-6 text-gray-800">
+        Ajukan Peminjaman
+    </h1>
 
-    <label class="block mb-2">Jumlah Pinjam</label>
-    <input 
-        type="number"
-        name="jumlah"
-        min="1"
-        required
-        class="border p-2 w-full mb-4">
+    <!-- FORM CARD -->
+    <div class="bg-white p-6 rounded-xl shadow max-w-xl">
 
-    <label class="block mb-2">Tanggal Kembali</label>
-    <input 
-        type="date"
-        name="tanggal_kembali"
-        required
-        min="<?= date('Y-m-d'); ?>"
-        class="border p-2 w-full mb-4">
+        <form method="POST" class="space-y-4">
 
-    <button 
-        type="submit"
-        name="pinjam"
-        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-        Ajukan
-    </button>
+            <div>
+                <label class="block mb-1 font-medium text-gray-700">
+                    Pilih Alat
+                </label>
+                <select 
+                    name="alat_id" 
+                    required 
+                    class="border rounded-lg p-2 w-full focus:ring focus:ring-blue-200">
+                    <option value="">-- Pilih --</option>
+                    <?php while($a = mysqli_fetch_assoc($alat)): ?>
+                        <option value="<?= $a['id']; ?>">
+                            <?= htmlspecialchars($a['nama_alat']); ?> (Stok: <?= $a['stok']; ?>)
+                        </option>
+                    <?php endwhile; ?>
+                </select>
+            </div>
 
-</form>
+            <div>
+                <label class="block mb-1 font-medium text-gray-700">
+                    Jumlah Pinjam
+                </label>
+                <input 
+                    type="number"
+                    name="jumlah"
+                    min="1"
+                    required
+                    class="border rounded-lg p-2 w-full focus:ring focus:ring-blue-200">
+            </div>
+
+            <div>
+                <label class="block mb-1 font-medium text-gray-700">
+                    Tanggal Kembali
+                </label>
+                <input 
+                    type="date"
+                    name="tanggal_kembali"
+                    required
+                    min="<?= date('Y-m-d'); ?>"
+                    class="border rounded-lg p-2 w-full focus:ring focus:ring-blue-200">
+            </div>
+
+            <div class="pt-2">
+                <button 
+                    type="submit"
+                    name="pinjam"
+                    class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                    Ajukan Peminjaman
+                </button>
+            </div>
+
+        </form>
+    </div>
+
 </div>
 
-<a href="dashboard.php" class="inline-block mt-6 text-blue-600">
-    ← Kembali ke Dashboard
-</a>
 
 </body>
 </html>

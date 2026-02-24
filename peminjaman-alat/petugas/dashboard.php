@@ -37,50 +37,13 @@ $pendingList = mysqli_query($conn, "
     <title>Dashboard Petugas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body class="bg-gray-100 min-h-screen flex">
 
 <!-- ================= SIDEBAR ================= -->
-<aside class="w-64 bg-green-600 text-white p-6 flex flex-col">
-    <h2 class="text-xl font-bold mb-8">Petugas</h2>
-
-    <ul class="space-y-3 flex-1">
-        <li>
-            <a href="dashboard.php"
-               class="block bg-white/20 p-2 rounded">
-               🏠 Dashboard
-            </a>
-        </li>
-        <li>
-            <a href="approve_peminjaman.php"
-               class="block hover:bg-white/20 p-2 rounded">
-               ✅ Approve
-            </a>
-        </li>
-        <li>
-            <a href="pengembalian.php"
-               class="block hover:bg-white/20 p-2 rounded">
-               ↩️ Pengembalian
-            </a>
-        </li>
-        <li>
-            <a href="laporan.php"
-               class="block hover:bg-white/20 p-2 rounded">
-               📊 Laporan
-            </a>
-        </li>
-
-    <a href="../auth/logout.php"
-       class="block bg-red-500 hover:bg-red-600 p-2 rounded text-center">
-       🚪 Logout
-    </a>
-
-    </ul>
-
-
-</aside>
+<?php include 'layout/sidebar.php'; ?>
 
 <!-- ================= MAIN ================= -->
 <main class="flex-1 p-8">
