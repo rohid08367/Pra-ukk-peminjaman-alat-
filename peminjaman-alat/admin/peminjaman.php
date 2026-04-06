@@ -27,7 +27,7 @@ $data = mysqli_query($conn, "
 <?php include 'layout/sidebar.php'; ?>
 
 <main class="flex-1 p-8 overflow-y-auto">
-<h1 class="text-2xl font-bold mb-6">Data Peminjaman</h1>
+
 
 <div class="bg-white p-6 rounded-xl shadow">
     <div class="overflow-y-auto max-h-[70vh]">

@@ -23,7 +23,6 @@
         </div>
         <div class="overflow-hidden">
             <p class="text-sm font-bold truncate leading-tight"><?= $_SESSION['nama'] ?? 'Staff Petugas'; ?></p>
-            <span class="text-[10px] text-indigo-300 font-medium tracking-wider uppercase opacity-70">Duty Active</span>
         </div>
     </div>
 
@@ -53,7 +52,7 @@
             $page = basename($_SERVER['PHP_SELF']);
             
             navItem('dashboard.php', 'chart-pie', 'Dashboard', $page=='dashboard.php');
-            navItem('approve_peminjaman.php', 'circle-check', 'Approve Pinjam', $page=='approve_peminjaman.php');
+            navItem('approve_peminjaman.php', 'circle-check', 'Setujui Pinjam', $page=='approve_peminjaman.php');
             navItem('pengembalian.php', 'rotate-left', 'Pengembalian', $page=='pengembalian.php');
             navItem('laporan.php', 'file-export', 'Laporan', $page=='laporan.php');
             ?>

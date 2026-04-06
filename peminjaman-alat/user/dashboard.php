@@ -61,7 +61,6 @@ mysqli_data_seek($pinjamanAktifList, 0);
 <!-- MAIN -->
 <main class="flex-1 p-8 fade-in">
 
-    <h1 class="text-2xl font-bold mb-2">Dashboard User</h1>
     <p class="mb-6 text-gray-600">Halo, <b><?= $_SESSION['nama']; ?></b></p>
 
     <!-- STAT CARD -->

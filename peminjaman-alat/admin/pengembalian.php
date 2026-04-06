@@ -28,7 +28,7 @@ $data = mysqli_query($conn, "
 <?php include 'layout/sidebar.php'; ?>
 
 <main class="flex-1 p-8">
-<h1 class="text-2xl font-bold mb-6">Data Pengembalian</h1>
+
 
 <div class="bg-white p-6 rounded-xl shadow">
 <table class="w-full border">

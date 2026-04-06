@@ -7,6 +7,7 @@ cekRole('petugas');
    PROSES PENGEMBALIAN
 ======================= */
 if (isset($_GET['kembali'])) {
+
     $id = $_GET['kembali'];
 
     $pinjam = mysqli_fetch_assoc(mysqli_query($conn, "
@@ -14,16 +15,20 @@ if (isset($_GET['kembali'])) {
             peminjaman.*,
             alat.stok,
             alat.id AS alat_id,
-            alat.denda_per_hari,
-            users.id AS user_id
+            alat.denda_per_hari
         FROM peminjaman
         JOIN alat ON peminjaman.alat_id = alat.id
-        JOIN users ON peminjaman.user_id = users.id
         WHERE peminjaman.id='$id'
+        AND peminjaman.status='menunggu_pengembalian'
     "));
 
     if (!$pinjam) {
-        echo "<script>alert('Data peminjaman tidak ditemukan');</script>";
+
+        echo "<script>
+        alert('User belum mengajukan pengembalian alat!');
+        location='pengembalian.php';
+        </script>";
+
         exit;
     }
 
@@ -58,7 +63,8 @@ if (isset($_GET['kembali'])) {
     mysqli_query($conn, "
         UPDATE peminjaman 
         SET status='dikembalikan',
-            denda='$denda'
+        jam_kembali = CURTIME(),
+        denda='$denda'
         WHERE id='$id'
     ");
 
@@ -84,11 +90,11 @@ if (isset($_GET['kembali'])) {
    DATA PEMINJAMAN AKTIF
 ======================= */
 $data = mysqli_query($conn, "
-    SELECT peminjaman.*, users.nama, alat.nama_alat
-    FROM peminjaman
-    JOIN users ON peminjaman.user_id = users.id
-    JOIN alat ON peminjaman.alat_id = alat.id
-    WHERE peminjaman.status IN ('disetujui','menunggu_pengembalian')
+SELECT peminjaman.*, users.nama, alat.nama_alat
+FROM peminjaman
+JOIN users ON peminjaman.user_id = users.id
+JOIN alat ON peminjaman.alat_id = alat.id
+WHERE peminjaman.status='menunggu_pengembalian'
 ");
 ?>
 
@@ -111,7 +117,7 @@ $data = mysqli_query($conn, "
 <!-- MAIN -->
 <main class="flex-1 p-8 overflow-y-auto">
 
-<h1 class="text-2xl font-bold mb-6">Pengembalian Alat</h1>
+
 
 <div class="bg-white p-6 rounded-xl shadow">
 <div class="overflow-y-auto max-h-[70vh]">

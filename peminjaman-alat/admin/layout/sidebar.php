@@ -9,8 +9,8 @@
                 <i class="fa-solid fa-boxes-stacked text-xl"></i>
             </div>
             <div>
-                <h2 class="text-2xl font-black tracking-tighter uppercase">Sarpra</h2>
-                <p class="text-[10px] text-blue-200 font-medium tracking-widest uppercase opacity-80 leading-none">Management alat</p>
+                <h2 class="text-2xl font-black tracking-tighter uppercase">BG Admin</h2>
+                <p class="text-[10px] text-blue-200 font-medium tracking-widest uppercase opacity-80 leading-none"></p>
             </div>
         </div>
     </div>
@@ -24,7 +24,6 @@
         </div>
         <div class="overflow-hidden">
             <p class="text-sm font-bold truncate leading-tight"><?= $_SESSION['nama'] ?? 'Admin User'; ?></p>
-            <span class="text-[10px] bg-blue-500/50 px-2 py-0.5 rounded-full text-blue-100 border border-white/10">Administrator</span>
         </div>
     </div>
 
@@ -51,7 +50,7 @@
             navItem('dashboard.php','chart-pie','Dashboard',$page=='dashboard.php');
             navItem('petugas.php','user-shield','Petugas',$page=='petugas.php');
             navItem('users.php','users','User',$page=='users.php');
-            navItem('alat.php','toolbox','Data Alat',$page=='alat.php');
+            navItem('alat.php','toolbox','Alat',$page=='alat.php');
             navItem('kategori.php','tags','Kategori',$page=='kategori.php');
             ?>
 
@@ -63,7 +62,6 @@
             <?php 
             navItem('peminjaman.php','arrow-right-arrow-left','Peminjaman',$page=='peminjaman.php');
             navItem('pengembalian.php','rotate-left','Pengembalian',$page=='pengembalian.php');
-            navItem('laporan.php','file-export','Laporan',$page=='laporan.php');
             navItem('log_aktivitas.php','fingerprint','Log Aktivitas',$page=='log_aktivitas.php');
             ?>
         </ul>

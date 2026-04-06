@@ -90,7 +90,7 @@ $pinjamTerbaru = mysqli_query($conn, "
 
 <!-- MAIN -->
 <main class="flex-1 p-8 fade-in">
-<h1 class="text-3xl font-bold mb-2">Dashboard</h1>
+<h1 class="text-3xl font-bold mb-2"></h1>
 <p class="text-gray-600 mb-6">Selamat datang, <b><?= $_SESSION['nama']; ?></b></p>
 
 <!-- STAT -->

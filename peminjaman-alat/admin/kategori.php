@@ -37,7 +37,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 <!-- MAIN -->
 <main class="flex-1 p-8 overflow-y-auto">
-    <h1 class="text-2xl font-bold mb-4">Kategori Alat</h1>
+
 
     <div class="bg-white p-6 rounded shadow mb-6 max-w-xl">
 

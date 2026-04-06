@@ -45,7 +45,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 <!-- MAIN -->
 <main class="flex-1 p-8 overflow-y-auto">
 
-<h1 class="text-2xl font-bold mb-6">Laporan Peminjaman (Petugas)</h1>
+
 
 <!-- ================= FILTER ================= -->
 <form method="GET" class="bg-white p-4 rounded-xl shadow mb-6 flex flex-wrap gap-4 items-end">
@@ -69,6 +69,18 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
         Filter
     </button>
+
+<button type="button"
+onclick="exportExcel()"
+class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+Export Excel
+</button>
+
+<button type="button"
+onclick="exportPDF()"
+class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+Export PDF
+</button>
 </form>
 
 <!-- ================= TABEL ================= -->
@@ -81,7 +93,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     <th class="border p-2">Alat</th>
     <th class="border p-2">Jumlah</th>
     <th class="border p-2">Pinjam</th>
+    <th class="border p-2">Jam Pinjam</th>
     <th class="border p-2">Kembali</th>
+    <th class="border p-2">Jam Kembali</th>
     <th class="border p-2">Status</th>
 </tr>
 
@@ -91,7 +105,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     <td class="border p-2"><?= $row['nama_alat']; ?></td>
     <td class="border p-2 text-center"><?= $row['jumlah']; ?></td>
     <td class="border p-2"><?= $row['tanggal_pinjam']; ?></td>
+    <td class="border p-2"><?= $row['jam_pinjam']; ?></td>
     <td class="border p-2"><?= $row['tanggal_kembali']; ?></td>
+    <td class="border p-2"><?= $row['jam_kembali']; ?></td>
     <td class="border p-2 text-center">
         <?php if ($row['status'] == 'disetujui'): ?>
             <span class="bg-green-100 text-green-700 px-2 py-1 rounded text-sm">
@@ -117,6 +133,49 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 </div>
 
 </div>
+
+<script>
+
+function exportExcel(){
+
+let dari=document.querySelector('input[name="dari"]').value;
+let sampai=document.querySelector('input[name="sampai"]').value;
+
+if(dari=='' || sampai==''){
+
+alert("Silakan pilih tanggal terlebih dahulu");
+
+return;
+
+}
+
+window.location.href=
+"export_excel.php?dari="+dari+"&sampai="+sampai;
+
+}
+
+</script>
+
+<script>
+
+function exportPDF(){
+
+let dari=document.querySelector('input[name="dari"]').value;
+let sampai=document.querySelector('input[name="sampai"]').value;
+
+if(dari=='' || sampai==''){
+
+alert("Silakan pilih tanggal terlebih dahulu");
+
+return;
+
+}
+
+window.print();
+
+}
+
+</script>
 
 </main>
 </body>

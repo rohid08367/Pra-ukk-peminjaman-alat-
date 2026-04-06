@@ -53,10 +53,10 @@
             ?>
         </ul>
 
-        <div class="mt-8 mx-2 p-4 bg-gradient-to-br from-white/5 to-white/10 rounded-2xl border border-white/5 text-center">
+        <!--<div class="mt-8 mx-2 p-4 bg-gradient-to-br from-white/5 to-white/10 rounded-2xl border border-white/5 text-center">
             <i class="fa-solid fa-circle-info text-emerald-200 mb-2 opacity-50"></i>
             <p class="text-[10px] text-emerald-100/70 leading-relaxed">Butuh bantuan saat meminjam alat? Hubungi Admin.</p>
-        </div>
+        </div>-->
     </nav>
 
     <div class="pt-5 border-t border-white/10 relative z-10">

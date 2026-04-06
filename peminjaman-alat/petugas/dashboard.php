@@ -47,7 +47,6 @@ $pendingList = mysqli_query($conn, "
 
 <!-- ================= MAIN ================= -->
 <main class="flex-1 p-8">
-    <h1 class="text-2xl font-bold mb-2">Dashboard Petugas</h1>
     <p class="mb-6 text-gray-600">
         Selamat datang, <b><?= $_SESSION['nama']; ?></b>
     </p>

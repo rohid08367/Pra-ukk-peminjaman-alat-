@@ -7,18 +7,48 @@ cekRole('admin');
 // TAMBAH PETUGAS
 // =======================
 if (isset($_POST['tambah'])) {
+
     $nama     = htmlspecialchars($_POST['nama']);
     $email    = htmlspecialchars($_POST['email']);
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    mysqli_query($conn, "
-        INSERT INTO users (nama, email, password, role)
+    // CEK EMAIL SUDAH DIGUNAKAN ATAU BELUM
+    $cek = mysqli_query($conn,"
+        SELECT id FROM users
+        WHERE email='$email'
+        LIMIT 1
+    ");
+
+    if(mysqli_num_rows($cek) > 0){
+
+        echo "<script>
+        alert('Email sudah digunakan!');
+        location='petugas.php';
+        </script>";
+
+        exit;
+    }
+
+    // VALIDASI PASSWORD MINIMAL 6 KARAKTER
+    if(strlen($_POST['password']) < 6){
+
+        echo "<script>
+        alert('Password minimal 6 karakter!');
+        location='petugas.php';
+        </script>";
+
+        exit;
+    }
+
+    // INSERT PETUGAS
+    mysqli_query($conn,"
+        INSERT INTO users (nama,email,password,role)
         VALUES ('$nama','$email','$password','petugas')
     ");
 
-    mysqli_query($conn, "
-        INSERT INTO log_aktivitas (user_id, aktivitas)
-        VALUES ('$_SESSION[id]', 'Menambah petugas')
+    mysqli_query($conn,"
+        INSERT INTO log_aktivitas (user_id,aktivitas)
+        VALUES ('$_SESSION[id]','Menambah petugas')
     ");
 
     header("Location: petugas.php");
@@ -74,7 +104,6 @@ $data = mysqli_query($conn, "
 <!-- MAIN -->
 <main class="flex-1 p-8">
 
-<h1 class="text-2xl font-bold mb-6">Data Petugas</h1>
 
 <!-- ================= FORM TAMBAH ================= -->
 <div class="bg-white p-6 rounded-xl shadow mb-6 max-w-3xl">

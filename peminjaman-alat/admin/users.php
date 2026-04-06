@@ -7,18 +7,37 @@ cekRole('admin');
 // TAMBAH USER
 // =======================
 if (isset($_POST['tambah'])) {
+
     $nama     = htmlspecialchars($_POST['nama']);
     $email    = htmlspecialchars($_POST['email']);
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    mysqli_query($conn, "
-        INSERT INTO users (nama, email, password, role)
-        VALUES ('$nama', '$email', '$password', 'user')
+    // CEK EMAIL SUDAH ADA ATAU BELUM
+    $cek = mysqli_query($conn,"
+        SELECT id FROM users 
+        WHERE email='$email'
+        LIMIT 1
     ");
 
-    mysqli_query($conn, "
-        INSERT INTO log_aktivitas (user_id, aktivitas)
-        VALUES ('$_SESSION[id]', 'Menambah user')
+    if(mysqli_num_rows($cek) > 0){
+
+        echo "<script>
+        alert('Email sudah digunakan!');
+        location='users.php';
+        </script>";
+
+        exit;
+    }
+
+    // INSERT USER BARU
+    mysqli_query($conn,"
+        INSERT INTO users (nama,email,password,role)
+        VALUES ('$nama','$email','$password','user')
+    ");
+
+    mysqli_query($conn,"
+        INSERT INTO log_aktivitas (user_id,aktivitas)
+        VALUES ('$_SESSION[id]','Menambah user')
     ");
 
     header("Location: users.php");
@@ -74,7 +93,6 @@ $data = mysqli_query($conn, "
 <!-- MAIN -->
 <main class="flex-1 p-8">
 
-<h1 class="text-2xl font-bold mb-6">Data User (Peminjam)</h1>
 
 <!-- ================= FORM TAMBAH ================= -->
 <div class="bg-white p-6 rounded-xl shadow mb-6 max-w-3xl">

@@ -29,7 +29,7 @@ $data = mysqli_query($conn, "
 <!-- MAIN -->
 <main class="flex-1 p-8 overflow-y-auto">
 
-<h1 class="text-2xl font-bold mb-6">Riwayat Peminjaman</h1>
+
 
 <div class="bg-white p-6 rounded-xl shadow">
 

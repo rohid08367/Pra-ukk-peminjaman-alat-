@@ -82,8 +82,7 @@ $data = mysqli_query($conn, "
 <title>Approve Peminjaman</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body class="bg-gray-100 min-h-screen flex overflow-hidden">
@@ -94,7 +93,7 @@ $data = mysqli_query($conn, "
 <!-- MAIN -->
 <main class="flex-1 p-8 overflow-y-auto">
 
-<h1 class="text-2xl font-bold mb-6">Persetujuan Peminjaman</h1>
+
 
 <div class="bg-white p-6 rounded-xl shadow">
 <div class="overflow-x-auto">
